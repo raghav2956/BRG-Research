@@ -2,31 +2,31 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def main(alist):
-    return_array= []                                       # Forming final return array, empty to start with
-    min_pointx = find_minx( alist )                        # Finding point with min x coordinate
-    max_pointx = find_maxx( alist )                        # Finding point with max x coordinate
-    return_array.append(min_pointx)            # Since these points will always be a part of the convex hull, add them to the return array
-    return_array.append(max_pointx)   
+    return_array= []                               # Forming final return array, empty to start with
+    min_pointx = find_minx( alist )                # Finding point with min x coordinate
+    max_pointx = find_maxx( alist )                # Finding point with max x coordinate
+    return_array.append( min_pointx )            # Since these points will always be a part of the convex hull, add them to the return array
+    return_array.append( max_pointx )   
     #plot(alist)
     
     #plt.plot(min_pointx, max_pointx)
     #plt.show()
     
-    Upper_side = []                                        # Empty list of all the points 'above'/ on one side of the line drawn by min_pointx and maxpointx
-    Lower_side = []                                        # Empty list of all the points 'below'/ on other side of the line drawn by min_pointx and maxpointx
+    Upper_side = []        # Empty list of all the points 'above'/ on one side of the line drawn by min_pointx and maxpointx
+    Lower_side = []        # Empty list of all the points 'below'/ on other side of the line drawn by min_pointx and maxpointx
     for Point in alist:
         Signed_area = tri_area( min_pointx, max_pointx, Point ) # Calculating signed area of triangle formed by some point, min_pointx and maxpointx
         #print ("Signed Area is " + str(Signed_area))
         if Signed_area > 0:
-            Upper_side.append(Point)                       # Appending depending on sign of triangle
+            Upper_side.append( Point )                       # Appending depending on sign of triangle
         if Signed_area < 0:
-            Lower_side.append(Point)
+            Lower_side.append( Point )
     
     #print ("Upper Points are" + str(Upper_side))
     #print ("Lower Points are" + str(Lower_side))
             
     hull1 = hull( min_pointx, max_pointx, Upper_side, True )# Passing in min_pointx, maxpointx, array of points and a boolean for the +ve triangle area side
-    #print (hull1)                                                        #  # ....returns list of points
+    #print (hull1)                                            # ....returns list of points
     hull2 = hull( min_pointx, max_pointx, Lower_side, False )
     #print (hull2)
     #print (return_array)
@@ -50,18 +50,23 @@ def hull( PointA, PointB, ArrPoints, PositiveArea ):
             max_areaP = Point
     
     #print ("Furthest Point is" + str(max_areaP))
-    Recur_arrayA = []                                       # The triangle PointA, PointB, max_areaP divides arrPoints in 3 regions. Need to call hull recursively on the two
-                                                            # regions that face outwards, i.e. points not contained in the triangle.
+    Recur_arrayA = []     # The triangle PointA, PointB, max_areaP divides arrPoints in 3 regions. Need to call hull recursively on the two
+                          # regions that face outwards, i.e. points not contained in the triangle.
     Recur_arrayB = []
     for Point in ArrPoints:
         Signed_area = tri_area( PointA, max_areaP, Point )
-        #print ("Signed Area for PointA and maxAreaP is" + str(Signed_area))
-        if PositiveArea:                                   # if ArrPoints were the points with positive area to start with (PositiveArea == True), then the points in the
-                                                           # 2 regions of importance will have positive triangle area w.r.t PointA and max_areaP                                            
+        
+         # if ArrPoints were the points with positive area to start with (PositiveArea == True), then the points in the
+         # 2 regions of importance will have positive triangle area w.r.t PointA and max_areaP 
+        
+        if PositiveArea:                                                 
             if Signed_area > 0:
                 Recur_arrayA.append(Point)
-        else:                                              # if ArrPoints were the points with positive area to start with (PositiveArea == True), then the points in the
-                                                           # 2 regions of importance will have positive triangle area w.r.t PointA and max_areaP    
+        
+          # if ArrPoints were the points with positive area to start with (PositiveArea == True), then the points in the 
+          # 2 regions of importance will have positive triangle area w.r.t PointA and max_areaP    
+                
+        else:                            
             if Signed_area < 0:
                 Recur_arrayA.append(Point)
                 
@@ -81,7 +86,8 @@ def hull( PointA, PointB, ArrPoints, PositiveArea ):
     return [max_areaP] + hull(PointA, max_areaP, Recur_arrayA, PositiveArea) + hull(PointB, max_areaP, Recur_arrayB, PositiveArea)
         
     
-# Helper Functions    
+# Helper Functions   
+
 def find_minx(alist):
     min_pointx = alist[0]
     for x in alist:
