@@ -81,12 +81,7 @@ def hull( PointA, PointB, ArrPoints, PositiveArea ):
     return [max_areaP] + hull(PointA, max_areaP, Recur_arrayA, PositiveArea) + hull(PointB, max_areaP, Recur_arrayB, PositiveArea)
         
     
-    
-    
-    
-    
-    
-    
+# Helper Functions    
 def find_minx(alist):
     min_pointx = alist[0]
     for x in alist:
