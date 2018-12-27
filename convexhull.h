@@ -15,6 +15,6 @@ Point find_maxx( std::vector<Point>& alist );
 
 int tri_area(Point pointA, Point pointB, Point pointC);
 
-int convexhull( std::vector<Point>& alist );
+std::vector<Point> convexhull( std::vector<Point>& alist );
 
 //#endif
