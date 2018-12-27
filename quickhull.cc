@@ -1,4 +1,4 @@
-#include "convexhull.h"
+#include "quickhull.h"
 #include <vector>
 #include <stdlib.h>
 #include <iostream>
