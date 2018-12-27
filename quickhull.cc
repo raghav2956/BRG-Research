@@ -66,7 +66,6 @@ std::vector<Point> hull( Point pointA, Point pointB, std::vector<Point> arr_poin
 			max_areaP = point;
 		}
 	}
-	//std::cout << "max area point x value is  " << max_areaP.x_value << " and y value is  " <<  max_areaP.y_value << "\n";
 	 
 	//The triangle PointA, PointB, max_areaP divides arrPoints in 3 regions. Need to call hull recursively on the two
   //regions that face outwards, i.e. points not contained in the triangle.
@@ -106,13 +105,6 @@ std::vector<Point> hull( Point pointA, Point pointB, std::vector<Point> arr_poin
 		}
 	}
 	
-	//for (auto point: recur_array_a){
-	//std::cout << "recur array A point x value is " << point.x_value << " and y value is " << point.y_value << "\n";
-//	}
-	
-	//for (auto point: recur_array_b){
-	//std::cout << "recur array B point x value is " << point.x_value << " and y value is " << point.y_value << "\n";
-	//} 
 
 	std::vector<Point> recursive_vector1 = hull( pointA, max_areaP, recur_array_a, positive_area );
 	std::vector<Point> recursive_vector2 = hull( max_areaP, pointB, recur_array_b, positive_area );
@@ -132,9 +124,6 @@ std::vector<Point> convexhull( std::vector<Point>& alist ){
   return_array.push_back(min_pointx);
 	return_array.push_back(max_pointx);	
  
-	//for (auto i: return_array){
-	//	std::cout << "x value is " << i.x_value << " and y value is " << i.y_value << "\n";
-	//}
 
 	//make 2 vectors, upper side and lower side; they contain points that lie above and below the line	
 	//drawn by min_pointx and max_pointx as determined by the triangle area helper function
@@ -152,16 +141,6 @@ std::vector<Point> convexhull( std::vector<Point>& alist ){
 			lower_side.push_back( i );
 		}
 	}
-	//for (auto i: upper_side){
-	//	std::cout << "x value of upper side  is " << i.x_value << " and y value of upper side is " << i.y_value << "\n";
- //}
-	
-	//for (auto i: lower_side){
-	//	std::cout << "x value of lower side is " << i.x_value << " and y value of lower side is " << i.y_value << "\n";
-//	}		
-
-		
-	
 
 		std::vector<Point> hull1 = hull( min_pointx, max_pointx, upper_side, true );
 		std::vector<Point> hull2 = hull( min_pointx, max_pointx, lower_side, false );
@@ -183,7 +162,7 @@ int main(){
 	std::ofstream file;
 	file.open("Input.txt");
 	std::vector<Point> myvector;
-//	file << "X Values" << setw(40) << right << "Y_Values" << "\n";
+
 	for (int i = 0; i < 100; i++){
 		Point rand_point;
 		rand_point.x_value = rand() % 100;
@@ -195,13 +174,10 @@ int main(){
 	file.close();
 	std::vector<Point> hull_points = convexhull(myvector);
 	file.open("Output.txt");
-	//file << "X Values" << setw(40) << right << "Y_Values" << "\n";	
 	for (auto point: hull_points){
 		file << point.x_value << setw(40) << right <<  point.y_value << left << "\n";
 	}
-					
-
-
+  
 	return 0;
 }
 
